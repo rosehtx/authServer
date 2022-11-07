@@ -1,0 +1,36 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group = 'com.serverlist'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //@Slf4j 引入开始
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
+    //@Slf4j 引入结束
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    //json
+    implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
+    // okhttp
+    implementation "com.squareup.okhttp3:okhttp:4.2.2"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
