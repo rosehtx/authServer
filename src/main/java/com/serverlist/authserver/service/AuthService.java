@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -27,6 +27,9 @@ public class AuthService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private HttpClientService httpClientService;
 
     private AuthService(){
 
@@ -69,6 +72,10 @@ public class AuthService {
         String getUrl =  sb + "";
         log.info("curl url => " + getUrl);
 
+        Map<String,Object> httpData = new HashMap<>();
+        httpData.put("uid",postCheckData.getUid());
+        httpData.put("token",postCheckData.getToken());
+
         // restTemplate 方式 get请求 getForObject方式
 //        String restTemplateGet   = restTemplate.getForObject(getUrl, String.class);//通过字符串再转换
         CheckTokenData restTemplateGet   = restTemplate.getForObject(getUrl, CheckTokenData.class);//直接到对象
@@ -95,6 +102,11 @@ public class AuthService {
         System.out.println(restTemplatePostEntity.getHeaders());
         System.out.print("\n");
         System.out.println(restTemplatePostEntity.getBody());
+
+        //jdk11+  HttpClient
+        CheckTokenData ddd = httpClientService.sendHttpClientPostRequest(url,httpData,"",CheckTokenData.class);
+        System.out.print("HttpClient post x-www-form-urlencoded \n");
+        System.out.print(ddd);
 
     }
 }
