@@ -28,7 +28,16 @@ dependencies {
     // okhttp
     implementation "com.squareup.okhttp3:okhttp:4.2.2"
 
+    //mybatis.dynamic
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1"
+    implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.1.4'
+    implementation 'org.mybatis.generator:mybatis-generator-core:1.4.0'
+    runtimeOnly 'mysql:mysql-connector-java'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
