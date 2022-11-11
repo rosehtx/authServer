@@ -41,8 +41,11 @@ public class AuthController {
         }
         CheckTokenData postCheckData = JSON.parseObject(checkJson,CheckTokenData.class);
         postCheckData.setToken("token");
-        AuthService.checkAuthToken(postCheckData);
-        return BaseResponse.failure("jj");
+        CheckTokenData responseCheckData =  AuthService.getAuthToken(postCheckData);
+
+        //数据库验证
+        AuthService.checkAuth(postCheckData);
+        return BaseResponse.success(responseCheckData);
     }
 
 }

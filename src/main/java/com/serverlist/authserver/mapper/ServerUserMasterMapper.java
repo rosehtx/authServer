@@ -36,8 +36,8 @@ import org.mybatis.dynamic.sql.util.SqlProviderAdapter;
 import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 
 @Mapper
-@DS("slave-1")
-public interface ServerUserMapper {
+@DS("master")
+public interface ServerUserMasterMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     BasicColumn[] selectList = BasicColumn.columnList(id, userId, token);
 

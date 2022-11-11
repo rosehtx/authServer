@@ -2,14 +2,25 @@ package com.serverlist.authserver.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.serverlist.authserver.channel.PlatformChannel;
 import com.serverlist.authserver.channel.RedisKeyChannel;
 import com.serverlist.authserver.dto.BaseResponse;
 import com.serverlist.authserver.dto.BaseResponseData;
 import com.serverlist.authserver.dto.server.AuthUserResponseData;
 import com.serverlist.authserver.dto.server.CheckTokenData;
+import com.serverlist.authserver.entity.ServerList;
+import com.serverlist.authserver.entity.ServerUser;
+import com.serverlist.authserver.mapper.ServerListDynamicSqlSupport;
+import com.serverlist.authserver.mapper.ServerUserDynamicSqlSupport;
+import com.serverlist.authserver.mapper.ServerUserMapper;
+import com.serverlist.authserver.mapper.ServerUserMasterMapper;
 import com.serverlist.authserver.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.dynamic.sql.SqlBuilder;
+import org.mybatis.dynamic.sql.SqlTable;
+import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -30,6 +42,12 @@ public class AuthService {
 
     @Autowired
     private HttpClientService httpClientService;
+
+    @Autowired
+    private ServerUserMapper ServerUserMapper;
+
+    @Autowired
+    private ServerUserMasterMapper ServerUserMasterMapper;
 
     private AuthService(){
 
@@ -61,7 +79,7 @@ public class AuthService {
         return BaseResponse.success(authData);
     }
 
-    public void checkAuthToken(CheckTokenData postCheckData){
+    public CheckTokenData getAuthToken(CheckTokenData postCheckData){
         String url  = "http://192.168.44.127/test/test.php";
         StringBuilder sb = new StringBuilder();
         sb.append(url)
@@ -89,12 +107,14 @@ public class AuthService {
         System.out.println(getResponseEntity.getHeaders());
         System.out.print("\n");
         System.out.println(getResponseEntity.getBody());
+        System.out.print("\n");
 
         // restTemplate post请求 postForObject方式
 //        String restTemplatePost = restTemplate.postForObject(url, postCheckData, String.class);
         CheckTokenData restTemplatePost   = restTemplate.postForObject(url, postCheckData,CheckTokenData.class);//直接到对象
         System.out.print("restTemplate postForObject方式 \n");
         System.out.println(restTemplatePost);
+        System.out.print("\n");
 
         // restTemplate 方式 post请求 postForEntity方式
         ResponseEntity<CheckTokenData> restTemplatePostEntity = restTemplate.postForEntity(url,postCheckData,CheckTokenData.class);
@@ -102,11 +122,42 @@ public class AuthService {
         System.out.println(restTemplatePostEntity.getHeaders());
         System.out.print("\n");
         System.out.println(restTemplatePostEntity.getBody());
+        System.out.print("\n");
 
         //jdk11+  HttpClient
-        CheckTokenData ddd = httpClientService.sendHttpClientPostRequest(url,httpData,"",CheckTokenData.class);
+        CheckTokenData clientPostData = httpClientService.sendHttpClientPostRequest(url,httpData,"",CheckTokenData.class);
         System.out.print("HttpClient post x-www-form-urlencoded \n");
-        System.out.print(ddd);
+        System.out.print(clientPostData);
+        System.out.print("\n");
 
+        CheckTokenData clientPostRawData = httpClientService.sendHttpClientRawPostRequest(url,JSONObject.toJSON(httpData).toString(),CheckTokenData.class);
+        System.out.print("HttpClient post raw \n");
+        System.out.print(clientPostRawData);
+        System.out.print("\n");
+
+        return  clientPostRawData;
+    }
+
+//    @DS("slave-1")
+    public void checkAuth(CheckTokenData postCheckData){
+        SelectStatementProvider select = SqlBuilder.select(ServerUserMapper.selectList)
+//                .from(SqlTable.of("server_user"))//直接字符串形式
+                .from(ServerUserDynamicSqlSupport.serverUser)
+                .where(ServerUserDynamicSqlSupport.userId,SqlBuilder.isEqualTo(postCheckData.getUid()))
+                .orderBy(ServerUserDynamicSqlSupport.id.descending())
+                .build()
+                .render(RenderingStrategies.MYBATIS3);
+        Optional<ServerUser> optionUser = ServerUserMapper.selectOne(select);
+        if(optionUser.isPresent()){
+            ServerUser user =  optionUser.get();
+            System.out.println(user);
+            System.out.print("\n");
+        }
+        Optional<ServerUser> optionMasterUser = ServerUserMasterMapper.selectOne(select);
+        if(optionMasterUser.isPresent()){
+            ServerUser masterUser =  optionMasterUser.get();
+            System.out.println(masterUser);
+            System.out.print("\n");
+        }
     }
 }

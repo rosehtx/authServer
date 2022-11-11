@@ -61,4 +61,44 @@ public class HttpClientService {
         }
         return null;
     }
+
+    public <T> T sendHttpClientRawPostRequest(String url, String apiParams, Class<T> responseClass){
+        //创建 builder
+        HttpRequest.Builder reBuilder = HttpRequest.newBuilder();
+        //链式调用
+        HttpRequest request = reBuilder
+                //存入消息头
+                //消息头是保存在一张 TreeMap 里的
+                .header("Content-Type", "application/json")
+                //http 协议版本
+//                .version(HttpClient.Version.HTTP_2)
+                //url 地址
+                .uri(URI.create(url))
+                //超时时间
+                .timeout(Duration.ofMillis(5000))
+                //发起一个 post 消息，需要存入一个消息体
+                .POST(HttpRequest.BodyPublishers.ofString(apiParams))
+                //发起一个 get 消息，get 不需要消息体
+                //.GET()
+                //method(...) 方法是 POST(...) 和 GET(...) 方法的底层，效果一样
+                .build();
+
+        try {
+            HttpResponse<String> response =  httpClientBuilder.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response != null) {
+                Integer responseCode = response.statusCode();
+                String responseBody  = response.body();
+                log.info("sendHttpClientRawPostRequest data");
+                log.info(responseCode + "");
+                log.info(responseBody);
+                T clientResponse = JSON.parseObject(responseBody, responseClass);
+                if (clientResponse != null) {
+                    return clientResponse;
+                }
+            }
+        }catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return null;
+    }
 }
