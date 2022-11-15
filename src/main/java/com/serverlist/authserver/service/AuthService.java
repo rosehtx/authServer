@@ -5,13 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.serverlist.authserver.channel.PlatformChannel;
 import com.serverlist.authserver.channel.RedisKeyChannel;
+import com.serverlist.authserver.dao.ServerUserDao;
 import com.serverlist.authserver.dto.BaseResponse;
 import com.serverlist.authserver.dto.BaseResponseData;
 import com.serverlist.authserver.dto.server.AuthUserResponseData;
 import com.serverlist.authserver.dto.server.CheckTokenData;
 import com.serverlist.authserver.entity.ServerList;
 import com.serverlist.authserver.entity.ServerUser;
-import com.serverlist.authserver.mapper.ServerListDynamicSqlSupport;
 import com.serverlist.authserver.mapper.ServerUserDynamicSqlSupport;
 import com.serverlist.authserver.mapper.ServerUserMapper;
 import com.serverlist.authserver.mapper.ServerUserMasterMapper;
@@ -48,6 +48,9 @@ public class AuthService {
 
     @Autowired
     private ServerUserMasterMapper ServerUserMasterMapper;
+
+    @Autowired
+    private ServerUserDao ServerUserDao;
 
     private AuthService(){
 
@@ -138,7 +141,6 @@ public class AuthService {
         return  clientPostRawData;
     }
 
-//    @DS("slave-1")
     public void checkAuth(CheckTokenData postCheckData){
         SelectStatementProvider select = SqlBuilder.select(ServerUserMapper.selectList)
 //                .from(SqlTable.of("server_user"))//直接字符串形式
@@ -159,5 +161,11 @@ public class AuthService {
             System.out.println(masterUser);
             System.out.print("\n");
         }
+        System.out.print("\n");
+        Map<String,Object> param = new HashMap<>();
+        param.put("user_id",postCheckData.getUid());
+        param.put("token",postCheckData.getToken());
+        Optional<ServerUser> ss = ServerUserDao.getOneDataByParam(param,ServerUserMapper.selectList);
+
     }
 }
