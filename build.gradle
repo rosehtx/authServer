@@ -31,7 +31,7 @@ dependencies {
     //mybatis.dynamic
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1"
     implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.1.4'
-    //自动生成mybatis mapper 直接运行MybatisGenerator
+    //自动生成mybatis mapper 创建generator层并创建MybatisGenerator后直接运行此文件
     implementation 'org.mybatis.generator:mybatis-generator-core:1.4.0'
     //多库设置
     implementation group: 'com.baomidou', name: 'dynamic-datasource-spring-boot-starter', version: '3.5.0'
