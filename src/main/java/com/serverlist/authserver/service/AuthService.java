@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -152,20 +153,31 @@ public class AuthService {
         Optional<ServerUser> optionUser = ServerUserMapper.selectOne(select);
         if(optionUser.isPresent()){
             ServerUser user =  optionUser.get();
+            System.out.print("slave select \n");
             System.out.println(user);
             System.out.print("\n");
         }
         Optional<ServerUser> optionMasterUser = ServerUserMasterMapper.selectOne(select);
         if(optionMasterUser.isPresent()){
             ServerUser masterUser =  optionMasterUser.get();
+            System.out.print("master select \n");
             System.out.println(masterUser);
             System.out.print("\n");
         }
-        System.out.print("\n");
         Map<String,Object> param = new HashMap<>();
         param.put("user_id",postCheckData.getUid());
         param.put("token",postCheckData.getToken());
-        Optional<ServerUser> ss = ServerUserDao.getOneDataByParam(param,ServerUserMapper.selectList);
 
+        ServerUser slaveUser = ServerUserDao.getOneDataByParam(param,ServerUserMapper.selectList);
+        if(slaveUser != null){
+            System.out.print("\n");
+            System.out.print(slaveUser);
+        }
+
+        List<ServerUser> userList = ServerUserDao.getListDataByParam(param,ServerUserMapper.selectList);
+//        if(userList != null){
+//            System.out.print("\n");
+            System.out.print(userList);
+//        }
     }
 }

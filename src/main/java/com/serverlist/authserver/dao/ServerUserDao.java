@@ -12,6 +12,7 @@ import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,11 +20,13 @@ import java.util.Optional;
 public class ServerUserDao {
 
     @Autowired
-    private ServerUserMapper ServerUserMapper;
+    private ServerUserMapper ServerUserMapper; //从库map
 
-    public Optional<ServerUser> getOneDataByParam(Map<String,Object> param, BasicColumn...selectList){
+    @Autowired
+    private ServerUserMapper ServerUserMasterMapper; //主库map
+
+    public ServerUser getOneDataByParam(Map<String,Object> param, BasicColumn...selectList){
         QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder  = SqlBuilder.select(selectList)
-//        SelectStatementProvider select = SqlBuilder.select(selectList)
 //                .from(SqlTable.of("server_user"))//直接字符串形式
                 .from(serverUser)
                 .where();
@@ -35,11 +38,24 @@ public class ServerUserDao {
                 .render(RenderingStrategies.MYBATIS3);
         Optional<ServerUser> optionUser = ServerUserMapper.selectOne(selectStatement);
         if(optionUser.isPresent()){
-            ServerUser masterUser =  optionUser.get();
-            System.out.print("===================");
-            System.out.println(masterUser);
-            System.out.print("\n");
+//            ServerUser slaveUser =  optionUser.get();
+            return optionUser.get();
         }
-        return optionUser;
+        return null;
+    }
+
+    public List<ServerUser> getListDataByParam(Map<String,Object> param, BasicColumn...selectList){
+        QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder  = SqlBuilder.select(selectList)
+                .from(serverUser)
+                .where();
+        if(param.containsKey("user_id")){
+            builder.and(userId,SqlBuilder.isEqualTo((Integer)param.get("user_id")));
+        }
+        SelectStatementProvider selectStatement = builder.orderBy(id.descending())
+                .build()
+                .render(RenderingStrategies.MYBATIS3);
+        List<ServerUser> resUser = ServerUserMasterMapper.selectMany(selectStatement);
+
+        return resUser;
     }
 }
