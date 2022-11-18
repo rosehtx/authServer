@@ -3,6 +3,7 @@ package com.serverlist.authserver.dao;
 import com.serverlist.authserver.entity.ServerUser;
 import static com.serverlist.authserver.mapper.ServerUserDynamicSqlSupport.*;
 import com.serverlist.authserver.mapper.ServerUserMapper;
+import com.serverlist.authserver.mapper.ServerUserMasterMapper;
 import org.mybatis.dynamic.sql.BasicColumn;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
@@ -23,8 +24,9 @@ public class ServerUserDao {
     private ServerUserMapper ServerUserMapper; //从库map
 
     @Autowired
-    private ServerUserMapper ServerUserMasterMapper; //主库map
+    private ServerUserMasterMapper ServerUserMasterMapper; //主库map
 
+    //从库获取唯一数据  selectOne若是多数据会报错
     public ServerUser getOneDataByParam(Map<String,Object> param, BasicColumn...selectList){
         QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder  = SqlBuilder.select(selectList)
 //                .from(SqlTable.of("server_user"))//直接字符串形式
@@ -44,6 +46,7 @@ public class ServerUserDao {
         return null;
     }
 
+    //主库获取多个数据
     public List<ServerUser> getListDataByParam(Map<String,Object> param, BasicColumn...selectList){
         QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder  = SqlBuilder.select(selectList)
                 .from(serverUser)

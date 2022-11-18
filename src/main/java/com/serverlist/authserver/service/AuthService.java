@@ -26,10 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -143,41 +140,35 @@ public class AuthService {
     }
 
     public void checkAuth(CheckTokenData postCheckData){
-        SelectStatementProvider select = SqlBuilder.select(ServerUserMapper.selectList)
-//                .from(SqlTable.of("server_user"))//直接字符串形式
-                .from(ServerUserDynamicSqlSupport.serverUser)
-                .where(ServerUserDynamicSqlSupport.userId,SqlBuilder.isEqualTo(postCheckData.getUid()))
-                .orderBy(ServerUserDynamicSqlSupport.id.descending())
-                .build()
-                .render(RenderingStrategies.MYBATIS3);
-        Optional<ServerUser> optionUser = ServerUserMapper.selectOne(select);
-        if(optionUser.isPresent()){
-            ServerUser user =  optionUser.get();
-            System.out.print("slave select \n");
-            System.out.println(user);
-            System.out.print("\n");
-        }
-        Optional<ServerUser> optionMasterUser = ServerUserMasterMapper.selectOne(select);
-        if(optionMasterUser.isPresent()){
-            ServerUser masterUser =  optionMasterUser.get();
-            System.out.print("master select \n");
-            System.out.println(masterUser);
-            System.out.print("\n");
-        }
         Map<String,Object> param = new HashMap<>();
         param.put("user_id",postCheckData.getUid());
         param.put("token",postCheckData.getToken());
 
+        //主库获取多数据
+        List<ServerUser> userList = ServerUserDao.getListDataByParam(param,ServerUserMapper.selectList);
+        if(userList != null){
+            System.out.print("=======List<ServerUser>\n");
+            System.out.print(userList);
+            System.out.print("\n");
+            for(Iterator it = userList.iterator(); it.hasNext();)
+            {
+                ServerUser uu = (ServerUser) it.next();
+                System.out.print(uu.getToken());
+                System.out.print("\n");
+            }
+//            for(int i=0;i<userList.size(); i++)
+//            {
+//                ServerUser uu = userList.get(i);
+//                System.out.print(uu.getToken());
+//                System.out.print("\n");
+//            }
+        }
+
         ServerUser slaveUser = ServerUserDao.getOneDataByParam(param,ServerUserMapper.selectList);
         if(slaveUser != null){
-            System.out.print("\n");
+            System.out.print("slaveUser ===== \n");
             System.out.print(slaveUser);
         }
 
-        List<ServerUser> userList = ServerUserDao.getListDataByParam(param,ServerUserMapper.selectList);
-//        if(userList != null){
-//            System.out.print("\n");
-            System.out.print(userList);
-//        }
     }
 }
