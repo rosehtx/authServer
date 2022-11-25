@@ -5,12 +5,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.serverlist.authserver.channel.PlatformChannel;
 import com.serverlist.authserver.channel.RedisKeyChannel;
+import com.serverlist.authserver.dao.ServerNoticeDao;
 import com.serverlist.authserver.dao.ServerUserDao;
 import com.serverlist.authserver.dto.BaseResponse;
 import com.serverlist.authserver.dto.BaseResponseData;
 import com.serverlist.authserver.dto.server.AuthUserResponseData;
 import com.serverlist.authserver.dto.server.CheckTokenData;
 import com.serverlist.authserver.entity.ServerList;
+import com.serverlist.authserver.entity.ServerNotice;
 import com.serverlist.authserver.entity.ServerUser;
 import com.serverlist.authserver.mapper.ServerUserDynamicSqlSupport;
 import com.serverlist.authserver.mapper.ServerUserMapper;
@@ -45,10 +47,10 @@ public class AuthService {
     private ServerUserMapper ServerUserMapper;
 
     @Autowired
-    private ServerUserMasterMapper ServerUserMasterMapper;
+    private ServerUserDao ServerUserDao;
 
     @Autowired
-    private ServerUserDao ServerUserDao;
+    private ServerNoticeDao ServerNoticeDao;
 
     private AuthService(){
 
@@ -164,11 +166,18 @@ public class AuthService {
 //            }
         }
 
+        //获取单个数据
         ServerUser slaveUser = ServerUserDao.getOneDataByParam(param,ServerUserMapper.selectList);
         if(slaveUser != null){
             System.out.print("slaveUser ===== \n");
             System.out.print(slaveUser);
         }
+
+        //连表查询notice和列表
+        List<ServerNotice>  resNotice = ServerNoticeDao.getListDataByParam();
+        System.out.print("\n");
+        System.out.print("resNotice ===== \n");
+        System.out.print(resNotice);
 
     }
 }

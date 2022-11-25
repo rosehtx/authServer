@@ -22,6 +22,44 @@ public class ServerNotice {
     private Byte isEnd;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer serverListId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String ip;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getServerListId() {
+        return serverListId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public ServerNotice withServerListId(Integer serverListId) {
+        this.setServerListId(serverListId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setServerListId(Integer srverListId) {
+        this.serverListId = serverListId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getIp() {
+        return ip;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public ServerNotice withIp(String ip) {
+        this.setIp(ip);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getId() {
         return id;
     }
@@ -135,6 +173,8 @@ public class ServerNotice {
             && (this.getNotice() == null ? other.getNotice() == null : this.getNotice().equals(other.getNotice()))
             && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
             && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
+            && (this.getServerListId() == null ? other.getServerListId() == null : this.getServerListId().equals(other.getServerListId()))
+            && (this.getIp() == null ? other.getIp() == null : this.getIp().equals(other.getIp()))
             && (this.getIsEnd() == null ? other.getIsEnd() == null : this.getIsEnd().equals(other.getIsEnd()));
     }
 
