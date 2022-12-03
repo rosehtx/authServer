@@ -24,6 +24,7 @@ import org.mybatis.dynamic.sql.SqlTable;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,6 +34,9 @@ import java.util.*;
 @Slf4j
 @Service
 public class AuthService {
+
+    @Value("${php.http.url}")
+    private String phpHttpUrl;
 
     @Autowired
     private RedisUtil RedisUtil;
@@ -83,7 +87,7 @@ public class AuthService {
     }
 
     public CheckTokenData getAuthToken(CheckTokenData postCheckData){
-        String url  = "http://192.168.44.127/test/test.php";
+        String url  = phpHttpUrl;
         StringBuilder sb = new StringBuilder();
         sb.append(url)
                 .append("?uid=")

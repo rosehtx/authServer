@@ -39,7 +39,7 @@ public class ServerNotice {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setServerListId(Integer srverListId) {
+    public void setServerListId(Integer serverListId) {
         this.serverListId = serverListId;
     }
 
@@ -173,8 +173,6 @@ public class ServerNotice {
             && (this.getNotice() == null ? other.getNotice() == null : this.getNotice().equals(other.getNotice()))
             && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
             && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
-            && (this.getServerListId() == null ? other.getServerListId() == null : this.getServerListId().equals(other.getServerListId()))
-            && (this.getIp() == null ? other.getIp() == null : this.getIp().equals(other.getIp()))
             && (this.getIsEnd() == null ? other.getIsEnd() == null : this.getIsEnd().equals(other.getIsEnd()));
     }
 
@@ -205,6 +203,8 @@ public class ServerNotice {
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", isEnd=").append(isEnd);
+        sb.append(", serverListId=").append(serverListId);
+        sb.append(", ip=").append(ip);
         sb.append("]");
         return sb.toString();
     }

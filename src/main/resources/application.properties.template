@@ -25,6 +25,9 @@ spring.datasource.dynamic.datasource.slave-1.username=root
 spring.datasource.dynamic.datasource.slave-1.password=root
 spring.datasource.dynamic.datasource.slave-1.driver-class-name=com.mysql.cj.jdbc.Driver
 
+#测试http请求地址
+php.http.url=http://192.168.44.127/test/test.php
+
 
 
 
