@@ -39,7 +39,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @DS("slave-1")
 public interface ServerUserMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, userId, token);
+    BasicColumn[] selectList = BasicColumn.columnList(id, userId, token, userName);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -77,7 +77,8 @@ public interface ServerUserMapper {
     @Results(id="ServerUserResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="token", property="token", jdbcType=JdbcType.VARCHAR)
+        @Result(column="token", property="token", jdbcType=JdbcType.VARCHAR),
+        @Result(column="user_name", property="userName", jdbcType=JdbcType.VARCHAR)
     })
     List<ServerUser> selectMany(SelectStatementProvider selectStatement);
 
@@ -108,6 +109,7 @@ public interface ServerUserMapper {
             c.map(id).toProperty("id")
             .map(userId).toProperty("userId")
             .map(token).toProperty("token")
+            .map(userName).toProperty("userName")
         );
     }
 
@@ -117,6 +119,7 @@ public interface ServerUserMapper {
             c.map(id).toProperty("id")
             .map(userId).toProperty("userId")
             .map(token).toProperty("token")
+            .map(userName).toProperty("userName")
         );
     }
 
@@ -126,6 +129,7 @@ public interface ServerUserMapper {
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(userId).toPropertyWhenPresent("userId", record::getUserId)
             .map(token).toPropertyWhenPresent("token", record::getToken)
+            .map(userName).toPropertyWhenPresent("userName", record::getUserName)
         );
     }
 
@@ -160,14 +164,16 @@ public interface ServerUserMapper {
     static UpdateDSL<UpdateModel> updateAllColumns(ServerUser record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
                 .set(userId).equalTo(record::getUserId)
-                .set(token).equalTo(record::getToken);
+                .set(token).equalTo(record::getToken)
+                .set(userName).equalTo(record::getUserName);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateSelectiveColumns(ServerUser record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(userId).equalToWhenPresent(record::getUserId)
-                .set(token).equalToWhenPresent(record::getToken);
+                .set(token).equalToWhenPresent(record::getToken)
+                .set(userName).equalToWhenPresent(record::getUserName);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -175,6 +181,7 @@ public interface ServerUserMapper {
         return update(c ->
             c.set(userId).equalTo(record::getUserId)
             .set(token).equalTo(record::getToken)
+            .set(userName).equalTo(record::getUserName)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -184,6 +191,7 @@ public interface ServerUserMapper {
         return update(c ->
             c.set(userId).equalToWhenPresent(record::getUserId)
             .set(token).equalToWhenPresent(record::getToken)
+            .set(userName).equalToWhenPresent(record::getUserName)
             .where(id, isEqualTo(record::getId))
         );
     }

@@ -19,12 +19,17 @@ public final class ServerUserDynamicSqlSupport {
     public static final SqlColumn<String> token = serverUser.token;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> userName = serverUser.userName;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class ServerUser extends SqlTable {
         public final SqlColumn<Integer> id = column("id", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> userId = column("user_id", JDBCType.INTEGER);
 
         public final SqlColumn<String> token = column("token", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> userName = column("user_name", JDBCType.VARCHAR);
 
         public ServerUser() {
             super("server_user");

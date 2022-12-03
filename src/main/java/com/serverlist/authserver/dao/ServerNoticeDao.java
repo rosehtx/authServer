@@ -1,6 +1,7 @@
 package com.serverlist.authserver.dao;
 
 import com.serverlist.authserver.entity.ServerNotice;
+import com.serverlist.authserver.entity.ServerNoticeList;
 import com.serverlist.authserver.mapper.*;
 import org.mybatis.dynamic.sql.BasicColumn;
 import org.mybatis.dynamic.sql.SqlBuilder;
@@ -22,9 +23,9 @@ public class ServerNoticeDao {
     private ServerNoticeMapper ServerNoticeMapper;
 
     @Autowired
-    private ServerListMapper ServerListMapper;
+    private ServerNoticeListMapper ServerNoticeListMapper;
 
-    public List<ServerNotice> getListDataByParam(){
+    public List<ServerNoticeList> getListDataByParam(){
         QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder  = SqlBuilder.select(id,
                         serverId,
                         notice,
@@ -38,7 +39,7 @@ public class ServerNoticeDao {
         SelectStatementProvider selectStatement = builder.orderBy(id.descending())
                 .build()
                 .render(RenderingStrategies.MYBATIS3);
-        List<ServerNotice> resNotice = ServerNoticeMapper.selectManyJoinList(selectStatement);
+        List<ServerNoticeList> resNotice = ServerNoticeListMapper.selectManyJoinList(selectStatement);
 
         return resNotice;
     }

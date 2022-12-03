@@ -13,6 +13,9 @@ public class ServerUser {
     private String token;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String userName;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getId() {
         return id;
     }
@@ -60,6 +63,22 @@ public class ServerUser {
         this.token = token == null ? null : token.trim();
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getUserName() {
+        return userName;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public ServerUser withUserName(String userName) {
+        this.setUserName(userName);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
@@ -75,7 +94,8 @@ public class ServerUser {
         ServerUser other = (ServerUser) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getToken() == null ? other.getToken() == null : this.getToken().equals(other.getToken()));
+            && (this.getToken() == null ? other.getToken() == null : this.getToken().equals(other.getToken()))
+            && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()));
     }
 
     @Override
@@ -86,6 +106,7 @@ public class ServerUser {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getToken() == null) ? 0 : getToken().hashCode());
+        result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
         return result;
     }
 
@@ -99,6 +120,7 @@ public class ServerUser {
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
         sb.append(", token=").append(token);
+        sb.append(", userName=").append(userName);
         sb.append("]");
         return sb.toString();
     }

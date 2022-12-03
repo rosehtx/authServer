@@ -13,6 +13,7 @@ import com.serverlist.authserver.dto.server.AuthUserResponseData;
 import com.serverlist.authserver.dto.server.CheckTokenData;
 import com.serverlist.authserver.entity.ServerList;
 import com.serverlist.authserver.entity.ServerNotice;
+import com.serverlist.authserver.entity.ServerNoticeList;
 import com.serverlist.authserver.entity.ServerUser;
 import com.serverlist.authserver.mapper.ServerUserDynamicSqlSupport;
 import com.serverlist.authserver.mapper.ServerUserMapper;
@@ -178,7 +179,7 @@ public class AuthService {
         }
 
         //连表查询notice和列表
-        List<ServerNotice>  resNotice = ServerNoticeDao.getListDataByParam();
+        List<ServerNoticeList>  resNotice = ServerNoticeDao.getListDataByParam();
         System.out.print("\n");
         System.out.print("resNotice ===== \n");
         System.out.print(resNotice);

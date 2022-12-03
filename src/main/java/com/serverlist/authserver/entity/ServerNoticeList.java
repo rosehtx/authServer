@@ -2,7 +2,7 @@ package com.serverlist.authserver.entity;
 
 import javax.annotation.Generated;
 
-public class ServerNotice {
+public class ServerNoticeList {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer id;
 
@@ -22,12 +22,50 @@ public class ServerNotice {
     private Byte isEnd;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer serverListId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String ip;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getServerListId() {
+        return serverListId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public ServerNoticeList withServerListId(Integer serverListId) {
+        this.setServerListId(serverListId);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setServerListId(Integer serverListId) {
+        this.serverListId = serverListId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getIp() {
+        return ip;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public ServerNoticeList withIp(String ip) {
+        this.setIp(ip);
+        return this;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getId() {
         return id;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ServerNotice withId(Integer id) {
+    public ServerNoticeList withId(Integer id) {
         this.setId(id);
         return this;
     }
@@ -43,7 +81,7 @@ public class ServerNotice {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ServerNotice withServerId(Integer serverId) {
+    public ServerNoticeList withServerId(Integer serverId) {
         this.setServerId(serverId);
         return this;
     }
@@ -59,7 +97,7 @@ public class ServerNotice {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ServerNotice withNotice(String notice) {
+    public ServerNoticeList withNotice(String notice) {
         this.setNotice(notice);
         return this;
     }
@@ -75,7 +113,7 @@ public class ServerNotice {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ServerNotice withStartTime(Long startTime) {
+    public ServerNoticeList withStartTime(Long startTime) {
         this.setStartTime(startTime);
         return this;
     }
@@ -91,7 +129,7 @@ public class ServerNotice {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ServerNotice withEndTime(Long endTime) {
+    public ServerNoticeList withEndTime(Long endTime) {
         this.setEndTime(endTime);
         return this;
     }
@@ -107,7 +145,7 @@ public class ServerNotice {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public ServerNotice withIsEnd(Byte isEnd) {
+    public ServerNoticeList withIsEnd(Byte isEnd) {
         this.setIsEnd(isEnd);
         return this;
     }
@@ -129,7 +167,7 @@ public class ServerNotice {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ServerNotice other = (ServerNotice) that;
+        ServerNoticeList other = (ServerNoticeList) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getServerId() == null ? other.getServerId() == null : this.getServerId().equals(other.getServerId()))
             && (this.getNotice() == null ? other.getNotice() == null : this.getNotice().equals(other.getNotice()))
@@ -165,6 +203,8 @@ public class ServerNotice {
         sb.append(", startTime=").append(startTime);
         sb.append(", endTime=").append(endTime);
         sb.append(", isEnd=").append(isEnd);
+        sb.append(", serverListId=").append(serverListId);
+        sb.append(", ip=").append(ip);
         sb.append("]");
         return sb.toString();
     }
