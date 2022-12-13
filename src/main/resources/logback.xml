@@ -16,13 +16,20 @@
         </encoder>
     </appender>
 
-<!--    <appender name="plumelog" class="com.plumelog.logback.appender.KafkaAppender">-->
+    <!-- 日志传输到skywalking中的appender，通过qrpc传输 -->
+    <appender name="grpc-log" class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.log.GRPCLogClientAppender">
+
+    </appender>
+
+    <!-- kafaka的日志处理 -->
+    <!--    <appender name="plumelog" class="com.plumelog.logback.appender.KafkaAppender">-->
 <!--        <appName>auth-qa1</appName>-->
 <!--        <kafkaHosts>10.100.8.10:9092</kafkaHosts>-->
 <!--    </appender>-->
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="grpc-log"/>
 <!--        <appender-ref ref="plumelog"/>-->
     </root>
 </configuration>

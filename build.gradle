@@ -30,6 +30,8 @@ dependencies {
 
     //用于skywalking日志收集
     implementation('com.plumelog:plumelog-logback:3.1.3')
+    //用于skywalking grpc方式的日志收集
+    implementation group: 'org.apache.skywalking', name: 'apm-toolkit-logback-1.x', version: '8.4.0'
 
     //mybatis.dynamic
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1"
