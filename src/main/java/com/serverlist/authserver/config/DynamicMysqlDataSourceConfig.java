@@ -1,6 +1,7 @@
 package com.serverlist.authserver.config;
 
 
+import com.serverlist.authserver.channel.commonEnum;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -23,8 +24,8 @@ public class DynamicMysqlDataSourceConfig {
             @Qualifier("masterDataSource") DataSource masterDataSource,
             @Qualifier("slaveDataSource") DataSource slaveDataSource) {
         Map<Object, Object> targetDataSources = new HashMap<>();
-        targetDataSources.put("master", masterDataSource);
-        targetDataSources.put("slave", slaveDataSource);
+        targetDataSources.put(commonEnum.master.getValue(), masterDataSource);
+        targetDataSources.put(commonEnum.slave.getValue(), slaveDataSource);
 
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         dynamicDataSource.setDefaultTargetDataSource(masterDataSource);

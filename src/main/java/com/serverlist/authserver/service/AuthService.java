@@ -179,10 +179,10 @@ public class AuthService {
         }
 
         //连表查询notice和列表
-        List<ServerNoticeList>  resNotice = ServerNoticeDao.getListDataByParam();
-        System.out.print("\n");
-        System.out.print("resNotice ===== \n");
-        System.out.print(resNotice);
+//        List<ServerNoticeList>  resNotice = ServerNoticeDao.getListDataByParam();
+//        System.out.print("\n");
+//        System.out.print("resNotice ===== \n");
+//        System.out.print(resNotice);
 
     }
 }

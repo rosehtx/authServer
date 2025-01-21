@@ -25,22 +25,22 @@ public class ServerNoticeDao {
     @Autowired
     private ServerNoticeListMapper ServerNoticeListMapper;
 
-    public List<ServerNoticeList> getListDataByParam(){
-        QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder  = SqlBuilder.select(id,
-                        serverId,
-                        notice,
-//                        SqlBuilder.count(id).as("count"),
-                        ServerListDynamicSqlSupport.id.as("server_list_id"),
-                        ServerListDynamicSqlSupport.ip)
-                .from(serverNotice)
-                .leftJoin(ServerListDynamicSqlSupport.serverList)
-                .on(serverId, SqlBuilder.equalTo(ServerListDynamicSqlSupport.serverId))
-                .where();
-        SelectStatementProvider selectStatement = builder.orderBy(id.descending())
-                .build()
-                .render(RenderingStrategies.MYBATIS3);
-        List<ServerNoticeList> resNotice = ServerNoticeListMapper.selectManyJoinList(selectStatement);
-
-        return resNotice;
-    }
+//    public List<ServerNoticeList> getListDataByParam(){
+//        QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder  = SqlBuilder.select(id,
+//                        serverId,
+//                        notice,
+////                        SqlBuilder.count(id).as("count"),
+//                        ServerListDynamicSqlSupport.id.as("server_list_id"),
+//                        ServerListDynamicSqlSupport.ip)
+//                .from(serverNotice)
+//                .leftJoin(ServerListDynamicSqlSupport.serverList)
+//                .on(serverId, SqlBuilder.equalTo(ServerListDynamicSqlSupport.serverId))
+//                .where();
+//        SelectStatementProvider selectStatement = builder.orderBy(id.descending())
+//                .build()
+//                .render(RenderingStrategies.MYBATIS3);
+//        List<ServerNoticeList> resNotice = ServerNoticeListMapper.selectManyJoinList(selectStatement);
+//
+//        return resNotice;
+//    }
 }
