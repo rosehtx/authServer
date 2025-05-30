@@ -25,6 +25,9 @@ dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
     //@Slf4j 引入结束
 
+    //URLUtil
+    implementation 'cn.hutool:hutool-all:5.7.16'
+
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     //json

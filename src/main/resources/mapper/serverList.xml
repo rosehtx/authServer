@@ -2,7 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.serverlist.authserver.mapper.ServerListMapper">
-    <select id="findByConditions" parameterType="map" resultType="com.serverlist.authserver.entity.ServerList">
+    <!-- type 指向entity层@Alias注解 -->
+    <resultMap id="serverListMap" type="ServerList">
+        <!-- 需要映射的字段字段映射 -->
+        <result property="serverId" column="server_id"/>
+        <result property="updateAt" column="update_at"/>
+    </resultMap>
+    <!-- resultMap关联上面的字段映射 -->
+    <select id="findByConditions" parameterType="map" resultMap="serverListMap">
         SELECT *
         FROM server_list
         WHERE 1 = 1

@@ -2,8 +2,10 @@ package com.serverlist.authserver.entity;
 
 import lombok.Data;
 import lombok.Value;
+import org.apache.ibatis.type.Alias;
 
 @Data
+@Alias("ServerList")
 public class ServerList {
     public Integer id;
     public Integer serverId;
